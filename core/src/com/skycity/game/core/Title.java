@@ -3,6 +3,10 @@ package com.skycity.game.core;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 游戏窗口标题。
+ * 在不同日期里显示不同标语
+ */
 public class Title {
 
     /**
@@ -12,8 +16,8 @@ public class Title {
     public static String getRandomWindowTitle() {
 
         Integer key = Integer.parseInt(new SimpleDateFormat("MMdd").format(new Date()));
-        String value = null;
 
+        String value;
         switch (key){
             case 719:
                 value = "生日快乐!";

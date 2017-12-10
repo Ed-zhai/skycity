@@ -1,5 +1,8 @@
 package com.skycity.game.core;
 
+/**
+ * 游戏版本号
+ */
 public  class Version {
 
     // 主版本，表示有大的更新,api 不兼容
