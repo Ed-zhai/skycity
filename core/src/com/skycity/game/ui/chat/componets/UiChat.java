@@ -30,7 +30,7 @@ public class UiChat implements Screen{
     @Override
     public void show() {
 
-        Gdx.app.log("my Main Screen", "show called");
+        Gdx.app.log("my Main Screens", "show called");
 //        texture = new Texture(Gdx.files.internal("badlogic.jpg")); //** texture is now the main image **//
     }
 
@@ -70,12 +70,12 @@ public class UiChat implements Screen{
     @Override
     public void hide() {
 
-        Gdx.app.log("my Main Screen", "hide called");
+        Gdx.app.log("my Main Screens", "hide called");
     }
 
     @Override
     public void dispose() {
-        Gdx.app.log("my Main Screen", "dispose called");
+        Gdx.app.log("my Main Screens", "dispose called");
         texture.dispose();
         batch.dispose();
     }
