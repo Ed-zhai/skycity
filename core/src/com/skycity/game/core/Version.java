@@ -1,6 +1,6 @@
 package com.skycity.game.core;
 
-public class Version {
+public  class Version {
 
     // 主版本，表示有大的更新,api 不兼容
     public int major;
@@ -13,7 +13,11 @@ public class Version {
         this.minor=minor;
     }
 
+    public  String getVersion(){
+        return this.toString();
+    }
 
+    // 显示 x.x.x
     @Override
     public String toString() {
         return "v."+this.major+"."+this.minor;
