@@ -1,4 +1,4 @@
-package com.skycity.game.ui.chat.Screens;
+package com.skycity.game.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
 public class BaseScreen implements Screen {
-    Game game;
+    protected Game game;
 
-    BaseScreen(Game game){
+    protected BaseScreen(Game game){
         this.game = game;
     }
 
@@ -50,7 +50,7 @@ public class BaseScreen implements Screen {
     /**
      * 清屏
      */
-    public void cleanScreen(){
+    protected void cleanScreen(){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 }

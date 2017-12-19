@@ -1,4 +1,4 @@
-package com.skycity.game.ui.chat.componets;
+package com.skycity.game.componets;
 
 
 import com.badlogic.gdx.Game;

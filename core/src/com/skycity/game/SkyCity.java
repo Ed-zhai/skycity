@@ -3,7 +3,7 @@ package com.skycity.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.skycity.game.core.Title;
-import com.skycity.game.ui.chat.Screens.StartScreen;
+import com.skycity.game.Screens.StartScreen;
 
 public class SkyCity extends Game {
 
