@@ -14,21 +14,21 @@ public class Assets {
     /**
      * 游戏统一格式字体
      */
-    private BitmapFont bitmapFont;
+    private BitmapFont f18, f22, f24;
 
-    private Assets(){
+    private Assets() {
         initFont();
     }
 
     /**
      * 加载资源
      */
-    public static void loadAssets(){
+    public static void loadAssets() {
         instance = new Assets();
     }
 
-    public static Assets getInstance(){
-        if(instance==null){
+    public static Assets getInstance() {
+        if (instance == null) {
             instance = new Assets();
         }
         return instance;
@@ -37,18 +37,33 @@ public class Assets {
     /**
      * 初始游戏字体
      */
-    private void initFont(){
+    private void initFont() {
         FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         fontConfig.fontFileName = "font.ttf";
         fontConfig.fontParameters.size = 22;
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameters.size = 18;
+        f18 = generator.generateFont(parameters);
         parameters.size = 22;
-        bitmapFont = generator.generateFont(parameters);
+        f22 = generator.generateFont(parameters);
+        parameters.size = 24;
+        f24 = generator.generateFont(parameters);
+
         generator.dispose();
     }
 
-    public BitmapFont getBitmapFont() {
-        return bitmapFont;
+    public BitmapFont getF18() {
+        return f18;
+    }
+
+    public BitmapFont getF22() {
+        return f22;
+    }
+
+    public BitmapFont getF24() {
+        return f24;
     }
 }
