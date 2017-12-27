@@ -10,7 +10,7 @@ public class SkyCity extends Game {
 	/**
 	 * 设置版本号
 	 */
-	public static final com.skycity.game.core.Version version = new com.skycity.game.core.Version(0, 0.02);
+	public static final com.skycity.game.core.Version version = new com.skycity.game.core.Version(0, 0.03);
 
 
 	@Override
