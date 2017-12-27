@@ -1,4 +1,4 @@
-package com.skycity.game.Screens;
+package com.skycity.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

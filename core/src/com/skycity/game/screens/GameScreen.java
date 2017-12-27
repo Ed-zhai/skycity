@@ -1,15 +1,11 @@
-package com.skycity.game.Screens;
+package com.skycity.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.skycity.game.core.Assets;
 
 import static com.skycity.game.core.Config.*;
 
@@ -18,38 +14,25 @@ import static com.skycity.game.core.Config.*;
  * 游戏主屏
  */
 public class GameScreen extends BaseScreen {
-    private Texture texture;
     private SpriteBatch batch;
-    private Label label;
     private TextField textField;
-    private Assets assets = Assets.getInstance();
+    Stage stage;
+
 
     GameScreen(Game game) {
         super(game);
     }
 
 
-    /**
-     * 初始化label
-     */
-    private void initLabel() {
-        //TODO 使用Rectangle类做ui的管理
-
-
-        label = new Label("hello", new Label.LabelStyle(assets.getF22(),Color.RED));
-
-        label.setPosition(500, 500);
-
-    }
 
     @Override
     public void show() {
-        textField = new TextField("hello",new TextField.TextFieldStyle(Assets.getInstance().getF22(),
-                Color.YELLOW, null,null,null));
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        textField = new TextField("",new Skin(Gdx.files.internal("clean-crispy-ui.json")));
         textField.setPosition(300,300);
-        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
-
-        initLabel();
+        textField.setSize(textField.getPrefWidth(),textField.getPrefHeight());
+        stage.addActor(textField);
 
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -62,8 +45,6 @@ public class GameScreen extends BaseScreen {
         cleanScreen();
 
         if(Gdx.input.isKeyJustPressed(Keys.OPEN_CHAT)){
-//            label.setVisible(true);
-//            textField.isVisible();
             System.out.printf("isVisible:" + textField.isVisible());
             Gdx.app.log("skycity" +
                     "","open_chat");
@@ -74,9 +55,8 @@ public class GameScreen extends BaseScreen {
         }
 
         batch.begin();
-        batch.draw(texture, 0, 0);
-        label.draw(batch, 1);
-        textField.draw(batch,1f);
+        stage.act();
+        stage.draw();
         batch.end();
     }
 
@@ -84,14 +64,12 @@ public class GameScreen extends BaseScreen {
     public void hide() {
         super.hide();
         Gdx.app.debug("skycity", "game screen hide and dispose");
-        texture.dispose();
         batch.dispose();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        texture.dispose();
         batch.dispose();
     }
 }

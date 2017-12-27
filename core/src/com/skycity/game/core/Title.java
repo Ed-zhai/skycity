@@ -29,6 +29,9 @@ public class Title {
             case 1224:
                 value = "圣诞节快乐!";
                 break;
+            case 0101:
+                value = "元旦快乐!";
+                break;
             default:
                 //TODO 随机出现祝福语
                 value = "你好啦";

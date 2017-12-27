@@ -3,7 +3,7 @@ package com.skycity.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.skycity.game.core.Title;
-import com.skycity.game.Screens.StartScreen;
+import com.skycity.game.screens.StartScreen;
 
 public class SkyCity extends Game {
 
@@ -20,6 +20,10 @@ public class SkyCity extends Game {
         setScreen(new StartScreen(this));
 	}
 
+    @Override
+    public void render() {
+        super.render();
+    }
 
     @Override
     public void dispose() {
