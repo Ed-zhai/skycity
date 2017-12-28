@@ -9,7 +9,7 @@ public class Config {
     /**
      * 游戏窗口宽
      */
-    public static final int SCREEN_WIDTH = 600;
+    public static final int SCREEN_WIDTH = 830;
     /**
      * 游戏窗口高
      */
@@ -22,7 +22,7 @@ public class Config {
         /**
          * 打开对话框架
          */
-        public static int OPEN_CHAT = Input.Keys.ENTER;
+        public static int CHAT = Input.Keys.ENTER;
         /**
          * 关闭各种游戏窗口
          */
