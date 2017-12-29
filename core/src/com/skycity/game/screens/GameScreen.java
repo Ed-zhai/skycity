@@ -2,16 +2,17 @@ package com.skycity.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import static com.skycity.game.core.Config.*;
+import static com.skycity.game.core.Config.Keys.CHAT;
+import static com.skycity.game.core.Config.Keys.JUMP;
+import static com.skycity.game.core.Config.SCREEN_HEIGHT;
+import static com.skycity.game.core.Config.SCREEN_WIDTH;
 
 
 /**
@@ -22,30 +23,83 @@ public class GameScreen extends BaseScreen {
     private Stage stage;
     private TextField chat;
     private Skin skin;
-    private Viewport viewport;
-    private Camera camera;
 
 
     GameScreen(Game game) {
         super(game);
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        camera = new OrthographicCamera();
 
         // TODO 改成画面不随窗口大小改变
-        viewport = new ScreenViewport();
-        stage = new Stage(viewport, batch);
-
+        stage = new Stage();
         skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
         chat = new TextField("", skin);
-        chat.setSize(SCREEN_WIDTH - 40, 22);
+        chat.setSize(SCREEN_WIDTH - 40, 25);
         chat.setPosition(20, 20);
         chat.setVisible(false);
+        chat.addListener(new ChatListener());
 
-        stage = new Stage();
         stage.addActor(chat);
         Gdx.input.setInputProcessor(stage);
+        stage.addListener(new StageListener());
 
+    }
+
+    class ChatListener extends InputListener{
+        @Override
+        public boolean keyDown(InputEvent event, int keycode) {
+
+            if(!chat.isVisible()){
+                chat.setDisabled(true);
+                return false;
+            }
+
+            switch (keycode) {
+                case CHAT:
+                    System.out.println("chat: enter");
+                    break;
+                default:
+                    System.out.println("chat:default");
+            }
+
+            return super.keyDown(event, keycode);
+        }
+    }
+
+    class StageListener extends InputListener {
+        @Override
+        public boolean keyDown(InputEvent event, int keycode) {
+            switch (keycode) {
+                case JUMP:
+                    System.out.println("jump");
+                    break;
+                case CHAT:
+                    toggleChat();
+                    break;
+                default:
+                    System.out.println("default");
+
+            }
+            return super.keyDown(event, keycode);
+        }
+
+
+
+        private void toggleChat() {
+            if(chat.isVisible()){
+                String text = chat.getText();
+                if(text.equals("")){
+                    chat.setVisible(false);
+                }else{
+                    System.out.println(text);
+                    chat.setText("");
+                }
+            }else{
+                chat.setVisible(true);
+                chat.setDisabled(false);
+                stage.setKeyboardFocus(chat);
+            }
+        }
     }
 
 
@@ -63,23 +117,6 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
         cleanScreen();
-
-        // TODO 当chat界面不可见后 还会监听按键。 有内存分配错误的bug
-        if (Gdx.input.isKeyJustPressed(Keys.CHAT)) {
-            if (chat.isVisible()) {
-                if (chat.getText().equals("")) {
-                    chat.setVisible(false);
-                }else{
-                    System.out.println(chat.getText());
-                    chat.setText("");
-                }
-            }else {
-                chat.setVisible(true);
-            }
-        }
-        if (Gdx.input.isKeyJustPressed(Keys.CLOSE_WIN)) {
-            chat.setVisible(false);
-        }
 
         batch.begin();
         stage.act();

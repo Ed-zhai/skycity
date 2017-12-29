@@ -22,23 +22,23 @@ public class Config {
         /**
          * 打开对话框架
          */
-        public static int CHAT = Input.Keys.ENTER;
+        public static final int CHAT = Input.Keys.ENTER;
         /**
          * 关闭各种游戏窗口
          */
-        public static int CLOSE_WIN = Input.Keys.ESCAPE;
+        public static final int CLOSE_WIN = Input.Keys.ESCAPE;
         /**
          * 游戏角色左移动
          */
-        public static int MOVE_LEFT = Input.Keys.LEFT;
+        public static final int MOVE_LEFT = Input.Keys.LEFT;
         /**
          * 游戏角色右移动
          */
-        public static int MOVE_RIGHT = Input.Keys.RIGHT;
+        public static  final int MOVE_RIGHT = Input.Keys.RIGHT;
         /**
          * 游戏角色跳跃
          */
-        public static int JUMP = Input.Keys.SPACE;
+        public static final int JUMP = Input.Keys.SPACE;
     }
 
 }
