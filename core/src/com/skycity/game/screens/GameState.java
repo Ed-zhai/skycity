@@ -2,10 +2,12 @@ package com.skycity.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
@@ -18,19 +20,19 @@ import static com.skycity.game.core.Config.SCREEN_WIDTH;
 /**
  * 游戏主屏
  */
-public class GameScreen extends BaseScreen {
+public class GameState extends BaseState {
     private SpriteBatch batch;
     private Stage stage;
     private TextField chat;
+    private Label health;
     private Skin skin;
 
 
-    GameScreen(Game game) {
+    GameState(Game game) {
         super(game);
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // TODO 改成画面不随窗口大小改变
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
         chat = new TextField("", skin);
@@ -39,7 +41,13 @@ public class GameScreen extends BaseScreen {
         chat.setVisible(false);
         chat.addListener(new ChatListener());
 
+        health = new Label("health: 100/100",skin);
+        health.setColor(Color.WHITE);
+        health.setSize(40,40);
+        health.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-60);
+
         stage.addActor(chat);
+        stage.addActor(health);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new StageListener());
 

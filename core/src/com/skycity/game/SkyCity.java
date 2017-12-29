@@ -3,8 +3,8 @@ package com.skycity.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.skycity.game.core.Title;
-import com.skycity.game.demo.DemoScreen;
-import com.skycity.game.screens.StartScreen;
+import com.skycity.game.demo.DemoState;
+import com.skycity.game.screens.StartState;
 
 import java.util.ResourceBundle;
 
@@ -22,9 +22,9 @@ public class SkyCity extends Game {
 		Gdx.graphics.setTitle(Title.getRandomWindowTitle()+"-"+version.getVersion());
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         if(bundle.getString("model").equals("test")){
-            setScreen(new DemoScreen(this));
+            setScreen(new DemoState(this));
         }else {
-            setScreen(new StartScreen(this));
+            setScreen(new StartState(this));
         }
 	}
 

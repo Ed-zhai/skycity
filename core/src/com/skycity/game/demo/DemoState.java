@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.skycity.game.SkyCity;
 import com.skycity.game.core.Config;
-import com.skycity.game.screens.BaseScreen;
+import com.skycity.game.screens.BaseState;
 
-public class DemoScreen extends BaseScreen {
+public class DemoState extends BaseState {
 
     Rectangle rec;
     Texture back;
     SpriteBatch batch;
     boolean hide=true;
 
-    public DemoScreen(SkyCity skyCity) {
+    public DemoState(SkyCity skyCity) {
         super(skyCity);
     }
 
