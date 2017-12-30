@@ -24,7 +24,8 @@ public class GameState extends BaseState {
     private SpriteBatch batch;
     private Stage stage;
     private TextField chat;
-    private Label health;
+    private Label HPLabel;
+    private Label VPLabel;
     private Skin skin;
 
 
@@ -41,13 +42,19 @@ public class GameState extends BaseState {
         chat.setVisible(false);
         chat.addListener(new ChatListener());
 
-        health = new Label("health: 100/100",skin);
-        health.setColor(Color.WHITE);
-        health.setSize(40,40);
-        health.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-60);
+        HPLabel = new Label("HP: 100/100",skin);
+        HPLabel.setColor(Color.WHITE);
+        HPLabel.setSize(40,40);
+        HPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-60);
+
+        VPLabel = new Label("VP: 100/100",skin);
+        VPLabel.setColor(Color.WHITE);
+        VPLabel.setSize(40,40);
+        VPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-100);
 
         stage.addActor(chat);
-        stage.addActor(health);
+        stage.addActor(HPLabel);
+        stage.addActor(VPLabel);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new StageListener());
 
