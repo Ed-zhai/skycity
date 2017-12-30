@@ -31,32 +31,33 @@ public class GameState extends BaseState {
 
     GameState(Game game) {
         super(game);
+
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage();
+        stage.addListener(new StageListener());
+        Gdx.input.setInputProcessor(stage);
+
         skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
         chat = new TextField("", skin);
         chat.setSize(SCREEN_WIDTH - 40, 25);
         chat.setPosition(20, 20);
         chat.setVisible(false);
         chat.addListener(new ChatListener());
+        stage.addActor(chat);
 
         HPLabel = new Label("HP: 100/100",skin);
         HPLabel.setColor(Color.WHITE);
         HPLabel.setSize(40,40);
         HPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-60);
+        stage.addActor(HPLabel);
 
         VPLabel = new Label("VP: 100/100",skin);
         VPLabel.setColor(Color.WHITE);
         VPLabel.setSize(40,40);
         VPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-100);
-
-        stage.addActor(chat);
-        stage.addActor(HPLabel);
         stage.addActor(VPLabel);
-        Gdx.input.setInputProcessor(stage);
-        stage.addListener(new StageListener());
 
     }
 
