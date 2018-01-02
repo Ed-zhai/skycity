@@ -3,7 +3,12 @@ package com.skycity.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,6 +32,8 @@ public class GameState extends BaseState {
     private Label HPLabel;
     private Label VPLabel;
     private Skin skin;
+    private TiledMap tiledMap;
+    private TiledMapRenderer tiledMapRenderer;
 
 
     GameState(Game game) {
@@ -38,8 +45,9 @@ public class GameState extends BaseState {
         stage = new Stage();
         stage.addListener(new StageListener());
         Gdx.input.setInputProcessor(stage);
-
         skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
+
+        // chat
         chat = new TextField("", skin);
         chat.setSize(SCREEN_WIDTH - 40, 25);
         chat.setPosition(20, 20);
@@ -47,25 +55,33 @@ public class GameState extends BaseState {
         chat.addListener(new ChatListener());
         stage.addActor(chat);
 
-        HPLabel = new Label("HP: 100/100",skin);
+        // HP
+        HPLabel = new Label("HP: 100/100", skin);
         HPLabel.setColor(Color.WHITE);
-        HPLabel.setSize(40,40);
-        HPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-60);
+        HPLabel.setSize(40, 40);
+        HPLabel.setPosition(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 60);
         stage.addActor(HPLabel);
 
-        VPLabel = new Label("VP: 100/100",skin);
+        // VP
+        VPLabel = new Label("VP: 100/100", skin);
         VPLabel.setColor(Color.WHITE);
-        VPLabel.setSize(40,40);
-        VPLabel.setPosition(SCREEN_WIDTH-120,SCREEN_HEIGHT-100);
+        VPLabel.setSize(40, 40);
+        VPLabel.setPosition(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 90);
         stage.addActor(VPLabel);
+
+        // tileMap
+        tiledMap = new TmxMapLoader().load("world/maze.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
+
 
     }
 
-    class ChatListener extends InputListener{
+    class ChatListener extends InputListener {
         @Override
         public boolean keyDown(InputEvent event, int keycode) {
 
-            if(!chat.isVisible()){
+            if (!chat.isVisible()) {
                 chat.setDisabled(true);
                 return false;
             }
@@ -100,17 +116,16 @@ public class GameState extends BaseState {
         }
 
 
-
         private void toggleChat() {
-            if(chat.isVisible()){
+            if (chat.isVisible()) {
                 String text = chat.getText();
-                if(text.equals("")){
+                if (text.equals("")) {
                     chat.setVisible(false);
-                }else{
+                } else {
                     System.out.println(text);
                     chat.setText("");
                 }
-            }else{
+            } else {
                 chat.setVisible(true);
                 chat.setDisabled(false);
                 stage.setKeyboardFocus(chat);
@@ -136,6 +151,7 @@ public class GameState extends BaseState {
 
         batch.begin();
         stage.act();
+        tiledMapRenderer.render();
         stage.draw();
         batch.end();
     }

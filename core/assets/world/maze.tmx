@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="31" height="31" tilewidth="32" tileheight="32" nextobjectid="1">
+ <imagelayer name="background" offsetx="158" offsety="-410">
+  <image source="maze.jpg" width="992" height="992"/>
+ </imagelayer>
+</map>
