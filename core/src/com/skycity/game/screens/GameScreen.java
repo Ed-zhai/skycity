@@ -47,7 +47,6 @@ public class GameScreen extends BaseScreen {
 
         mapCamera.position.set(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         renderer.setView(mapCamera);
-
     }
 
     /**
@@ -96,8 +95,8 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         update(delta);
-        cleanScreen();
         skyCity.batch.setProjectionMatrix(mapCamera.combined);
+        cleanScreen();
         renderer.render();
         hud.render();
         chat.render();

@@ -40,6 +40,7 @@ public class Hud {
     public void render(){
         stage.act();
         stage.draw();
+
     }
 
 }

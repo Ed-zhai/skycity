@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.skycity.game.SkyCity;
+import com.skycity.game.core.Assets;
 import com.skycity.game.core.Config;
 
 
@@ -13,13 +14,20 @@ import com.skycity.game.core.Config;
  */
 public class StartScreen extends BaseScreen {
     private Texture logoTexture; //欢迎界面
-
+    private boolean loaded;
 
     public StartScreen(SkyCity skyCity) {
         super(skyCity);
         logoTexture = new Texture(Gdx.files.internal("start.png"));
         skyCity.batch = new SpriteBatch();
         skyCity.batch.getProjectionMatrix().setToOrtho2D(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+
+        new Thread(() -> {
+            Gdx.app.postRunnable(() -> {
+                Assets.loadAssets();
+                loaded = true;
+            });
+        }).start();
     }
 
     @Override
@@ -40,15 +48,20 @@ public class StartScreen extends BaseScreen {
         skyCity.batch.end();
 
         deltaSum += delta;
+
         if (deltaSum > REMAIN) {
-            skyCity.setScreen(new GameScreen(skyCity));
+            if (loaded)
+                skyCity.setScreen(new GameScreen(skyCity));
+            else
+                skyCity.setScreen(new LoadScreen(skyCity));
         } else {
             alpha = gradientAlpha(deltaSum);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) && deltaSum >1) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) && deltaSum > 1 && loaded) {
             skyCity.setScreen(new GameScreen(skyCity));
         }
+
 
     }
 
