@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.skycity.game.SkyCity;
 
-public class BaseState implements Screen {
+public class BaseScreen implements Screen {
     protected SkyCity skyCity;
 
-    protected BaseState(SkyCity skyCity){
+    protected BaseScreen(SkyCity skyCity){
         this.skyCity = skyCity;
     }
 

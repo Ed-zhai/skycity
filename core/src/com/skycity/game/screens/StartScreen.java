@@ -11,11 +11,11 @@ import com.skycity.game.core.Config;
 /**
  * 游戏开始画面
  */
-public class StartState extends BaseState {
+public class StartScreen extends BaseScreen {
     private Texture logoTexture; //欢迎界面
 
 
-    public StartState(SkyCity skyCity) {
+    public StartScreen(SkyCity skyCity) {
         super(skyCity);
         logoTexture = new Texture(Gdx.files.internal("start.png"));
         skyCity.batch = new SpriteBatch();
@@ -41,13 +41,13 @@ public class StartState extends BaseState {
 
         deltaSum += delta;
         if (deltaSum > REMAIN) {
-            skyCity.setScreen(new GameState(skyCity));
+            skyCity.setScreen(new GameScreen(skyCity));
         } else {
             alpha = gradientAlpha(deltaSum);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) && deltaSum >1) {
-            skyCity.setScreen(new GameState(skyCity));
+            skyCity.setScreen(new GameScreen(skyCity));
         }
 
     }
