@@ -1,23 +1,20 @@
 package com.skycity.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.skycity.game.SkyCity;
+import com.skycity.game.core.Assets;
 
-import static com.skycity.game.core.Config.Keys.CHAT;
-import static com.skycity.game.core.Config.Keys.JUMP;
+import static com.skycity.game.core.Config.Keys.*;
 import static com.skycity.game.core.Config.SCREEN_HEIGHT;
 import static com.skycity.game.core.Config.SCREEN_WIDTH;
 
@@ -26,29 +23,28 @@ import static com.skycity.game.core.Config.SCREEN_WIDTH;
  * 游戏主屏
  */
 public class GameState extends BaseState {
-    private SpriteBatch batch;
     private Stage stage;
     private TextField chat;
     private Label HPLabel;
     private Label VPLabel;
-    private Skin skin;
-    private TiledMap tiledMap;
-    private TiledMapRenderer tiledMapRenderer;
+
+    private OrthographicCamera mapCamera;
+    private OrthogonalTiledMapRenderer renderer;
+    private Viewport gamePort;
 
 
-    GameState(Game game) {
-        super(game);
 
-        batch = new SpriteBatch();
-        batch.getProjectionMatrix().setToOrtho2D(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    public GameState(SkyCity skyCity) {
+        super(skyCity);
 
-        stage = new Stage();
+        gamePort =new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT);
+
+        stage = new Stage(gamePort,skyCity.batch);
         stage.addListener(new StageListener());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
 
         // chat
-        chat = new TextField("", skin);
+        chat = new TextField("", Assets.getInstance().getSkin());
         chat.setSize(SCREEN_WIDTH - 40, 25);
         chat.setPosition(20, 20);
         chat.setVisible(false);
@@ -56,23 +52,22 @@ public class GameState extends BaseState {
         stage.addActor(chat);
 
         // HP
-        HPLabel = new Label("HP: 100/100", skin);
+        HPLabel = new Label("HP: 100/100",  Assets.getInstance().getSkin());
         HPLabel.setColor(Color.WHITE);
         HPLabel.setSize(40, 40);
         HPLabel.setPosition(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 60);
         stage.addActor(HPLabel);
 
         // VP
-        VPLabel = new Label("VP: 100/100", skin);
+        VPLabel = new Label("VP: 100/100",  Assets.getInstance().getSkin());
         VPLabel.setColor(Color.WHITE);
         VPLabel.setSize(40, 40);
         VPLabel.setPosition(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 90);
         stage.addActor(VPLabel);
 
-        // tileMap
-        tiledMap = new TmxMapLoader().load("world/maze.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
+        mapCamera = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
+        renderer = new OrthogonalTiledMapRenderer(Assets.getInstance().getTiledMap(),skyCity.batch);
+        renderer.setView(mapCamera);
 
 
     }
@@ -107,6 +102,22 @@ public class GameState extends BaseState {
                     break;
                 case CHAT:
                     toggleChat();
+                    break;
+                case MOVE_LEFT:
+                    mapCamera.position.x--;
+                    mapCamera.update();
+                    break;
+                case MOVE_RIGHT:
+                    mapCamera.position.x++;
+                    mapCamera.update();
+                    break;
+                case MOVE_UP:
+                    mapCamera.position.y++;
+                    mapCamera.update();
+                    break;
+                case MOVE_DOWN:
+                    mapCamera.position.y--;
+                    mapCamera.update();
                     break;
                 default:
                     System.out.println("default");
@@ -148,12 +159,11 @@ public class GameState extends BaseState {
     public void render(float delta) {
         super.render(delta);
         cleanScreen();
-
-        batch.begin();
+        skyCity.batch.setProjectionMatrix(mapCamera.combined);
+        mapCamera.update();
+        renderer.render();
         stage.act();
-        tiledMapRenderer.render();
         stage.draw();
-        batch.end();
     }
 
 
@@ -166,8 +176,6 @@ public class GameState extends BaseState {
     @Override
     public void dispose() {
         super.dispose();
-        batch.dispose();
-        stage.dispose();
-        skin.dispose();
+        Assets.getInstance().dispose();
     }
 }

@@ -1,15 +1,15 @@
 package com.skycity.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.skycity.game.SkyCity;
 
 public class BaseState implements Screen {
-    protected Game game;
+    protected SkyCity skyCity;
 
-    protected BaseState(Game game){
-        this.game = game;
+    protected BaseState(SkyCity skyCity){
+        this.skyCity = skyCity;
     }
 
     @Override
@@ -51,14 +51,8 @@ public class BaseState implements Screen {
      * 清屏
      */
     protected void cleanScreen(){
+        Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    /**
-     * debug 日志
-     * @param message
-     */
-    protected void  debug(String message){
-        Gdx.app.debug("skycity", message);
-    }
 }

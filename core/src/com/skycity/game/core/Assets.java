@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.maps.tiled.*;
 
 /**
  * 图片，音乐，字体资源管理列
@@ -16,13 +18,24 @@ public class Assets {
      */
     private BitmapFont f18, f22, f24;
 
+    private Skin skin;
+
+    private TiledMap tiledMap;
+
     private Assets() {
         initFont();
+        skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
+        tiledMap = new TmxMapLoader().load("world/maze.tmx");
+    }
+
+    public TiledMap getTiledMap() {
+        return tiledMap;
     }
 
     /**
      * 加载资源
      */
+
     public static void loadAssets() {
         instance = new Assets();
     }
@@ -53,6 +66,17 @@ public class Assets {
         f24 = generator.generateFont(parameters);
 
         generator.dispose();
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public void dispose(){
+        f18.dispose();
+        f22.dispose();
+        f24.dispose();
+        skin.dispose();
     }
 
     public BitmapFont getF18() {

@@ -31,6 +31,8 @@ public class Config {
          * 游戏角色左移动
          */
         public static final int MOVE_LEFT = Input.Keys.LEFT;
+        public static final int MOVE_UP = Input.Keys.UP;
+        public static final int MOVE_DOWN = Input.Keys.DOWN;
         /**
          * 游戏角色右移动
          */
