@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.skycity.game.core.Assets;
 import com.skycity.game.core.Title;
-import com.skycity.game.screens.GameState;
+import com.skycity.game.screens.StartState;
 
 
 public class SkyCity extends Game {
@@ -25,8 +25,7 @@ public class SkyCity extends Game {
 
 		batch = new SpriteBatch();
 
-//        setScreen(new StartState(this));
-        setScreen(new GameState(this));
+        setScreen(new StartState(this));
 
 	}
 
