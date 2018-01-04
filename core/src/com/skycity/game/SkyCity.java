@@ -3,8 +3,9 @@ package com.skycity.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.skycity.game.core.Assets;
 import com.skycity.game.core.Title;
-import com.skycity.game.screens.StartState;
+import com.skycity.game.screens.GameState;
 
 
 public class SkyCity extends Game {
@@ -24,7 +25,8 @@ public class SkyCity extends Game {
 
 		batch = new SpriteBatch();
 
-        setScreen(new StartState(this));
+//        setScreen(new StartState(this));
+        setScreen(new GameState(this));
 
 	}
 
@@ -36,5 +38,6 @@ public class SkyCity extends Game {
     @Override
     public void dispose() {
         super.dispose();
+        Assets.getInstance().dispose();
     }
 }

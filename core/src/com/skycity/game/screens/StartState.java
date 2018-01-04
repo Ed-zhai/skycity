@@ -33,8 +33,6 @@ public class StartState extends BaseState {
 
     @Override
     public void render(float delta) {
-
-
         cleanScreen();
         skyCity.batch.begin();
         skyCity.batch.setColor(1, 1, 1, alpha);
