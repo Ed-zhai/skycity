@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.skycity.game.SkyCity;
+import com.skycity.game.componets.Chat;
 import com.skycity.game.componets.Hud;
 import com.skycity.game.core.Assets;
 
@@ -18,6 +19,7 @@ import static com.skycity.game.core.Config.SCREEN_WIDTH;
 public class GameState extends BaseState {
 
     private Hud hud;
+    private Chat chat;
 
     private OrthographicCamera mapCamera;
     private OrthogonalTiledMapRenderer renderer;
@@ -28,6 +30,7 @@ public class GameState extends BaseState {
     public GameState(SkyCity skyCity) {
         super(skyCity);
         hud = new Hud(skyCity.batch);
+        chat = new Chat(skyCity.batch);
 
         mapCamera = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
         gamePort =new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT,mapCamera);
@@ -71,6 +74,7 @@ public class GameState extends BaseState {
         skyCity.batch.setProjectionMatrix(mapCamera.combined);
         renderer.render();
         hud.render();
+        chat.render();
     }
 
 
