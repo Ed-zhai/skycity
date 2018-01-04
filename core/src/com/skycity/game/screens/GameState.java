@@ -1,6 +1,5 @@
 package com.skycity.game.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.skycity.game.SkyCity;
 import com.skycity.game.componets.Hud;
 import com.skycity.game.core.Assets;
-import com.skycity.game.core.Config;
 
 import static com.skycity.game.core.Config.SCREEN_HEIGHT;
 import static com.skycity.game.core.Config.SCREEN_WIDTH;
@@ -35,8 +33,8 @@ public class GameState extends BaseState {
         gamePort =new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT,mapCamera);
 
         renderer = new OrthogonalTiledMapRenderer(Assets.getInstance().getTiledMap(),skyCity.batch);
-        mapCamera.position.set(gamePort.getScreenWidth()/2,gamePort.getScreenHeight()/2,0);
 
+        mapCamera.position.set(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0);
         renderer.setView(mapCamera);
 
     }
@@ -50,11 +48,9 @@ public class GameState extends BaseState {
         mapCamera.update();
     }
 
+    // TODO 跟谁人物移动而移动
     private void handle(float delta) {
-        if(Gdx.input.isKeyJustPressed(Config.Keys.MOVE_RIGHT)){
-            mapCamera.position.x += delta;
-
-        }
+            mapCamera.position.x += delta*10;
     }
 
     @Override
