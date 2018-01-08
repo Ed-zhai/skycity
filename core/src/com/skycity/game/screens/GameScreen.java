@@ -70,13 +70,13 @@ public class GameScreen extends BaseScreen {
                 state = InputState.GAME;
             }
         } else if (Gdx.input.isKeyPressed(Config.Keys.MOVE_RIGHT) && state == InputState.GAME) {
-            mapCamera.position.x += delta * 20;
+            mapCamera.position.x += delta * 100;
         } else if (Gdx.input.isKeyPressed(Config.Keys.MOVE_LEFT) && state == InputState.GAME) {
-            mapCamera.position.x -= delta * 20;
+            mapCamera.position.x -= delta * 100;
         } else if (Gdx.input.isKeyPressed(Config.Keys.MOVE_UP) && state == InputState.GAME) {
-            mapCamera.position.y += delta * 20;
+            mapCamera.position.y += delta * 100;
         } else if (Gdx.input.isKeyPressed(Config.Keys.MOVE_DOWN) && state == InputState.GAME) {
-            mapCamera.position.y -= delta * 20;
+            mapCamera.position.y -= delta * 100;
         }
     }
 
